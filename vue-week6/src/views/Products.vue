@@ -1,30 +1,6 @@
 <template>
   產品
   <div class="container">
-    <!-- <table class="table">
-      <thead></thead>
-      <tbody>
-        <tr v-for="item in products" :key="item.id">
-          <td>{{ item.title }}</td>
-          <td></td>
-          <td></td>
-          <td>
-            <button
-              type="button"
-              class="btn btn-primary"
-              @click="goToPage(item)"
-            >
-              進入產品頁
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
-    <!-- <div class="text-end mt-4">
-      <button type="button" class="btn btn-primary" @click="openModal('new')">
-        建立新的產品
-      </button>
-    </div> -->
     <table class="table mt-4">
       <thead>
         <tr>
@@ -32,8 +8,7 @@
           <th>產品名稱</th>
           <th width="120">原價</th>
           <th width="120">售價</th>
-          <!-- <th width="100">是否啟用</th>
-          <th width="120">編輯</th> -->
+          <th width="120">明細</th>
         </tr>
       </thead>
       <tbody>
@@ -42,28 +17,17 @@
           <td>{{ item.title }}</td>
           <td class="text-end">{{ item.origin_price }}</td>
           <td class="text-end">{{ item.price }}</td>
-          <!-- <td>
-            <span v-if="item.is_enabled" class="text-success">啟用</span>
-            <span v-else>未啟用</span>
-          </td>
           <td>
             <div class="btn-group">
               <button
                 type="button"
                 class="btn btn-outline-primary btn-sm"
-                @click="openModal('edit', item)"
+                @click="goToPage(item)"
               >
-                編輯
-              </button>
-              <button
-                type="button"
-                class="btn btn-outline-danger btn-sm"
-                @click="openModal('delete', item)"
-              >
-                刪除
+                產品明細
               </button>
             </div>
-          </td> -->
+          </td>
         </tr>
       </tbody>
     </table>
@@ -111,6 +75,9 @@ export default {
     Pagination,
   },
   methods: {
+    goToPage(item) {
+      this.$router.push(`/front/product/${item.id}`);
+    },
     getData(page = 1) {
       const getDataAPI = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products?page=${page}`;
       console.log(getDataAPI);
@@ -131,11 +98,6 @@ export default {
     },
   },
   created() {
-    // const url = `${process.env.VUE_APP_API}/api/${process.env.VUE_APP_PATH}/products`;
-    // this.$http.get(url).then((res) => {
-    //   console.log(res);
-    //   this.products = res.data.products;
-    // });
     this.getData();
   },
 };
